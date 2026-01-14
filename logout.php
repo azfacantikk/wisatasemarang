@@ -5,3 +5,16 @@
     header("location:login.php"); //mengalihkan ke halaman login
 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="icon" href="image/image/logo wisata_9_11zon.jpg" />
+</head>
+<body>
+    
+</body>
+</html>

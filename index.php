@@ -81,7 +81,7 @@ include "koneksi.php";
         <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
 
         <?php
-        $sql = "SELECT * FROM article ORDER BY tanggal DESC";
+        $sql = "SELECT * FROM article ORDER BY id DESC";
         $hasil = $conn->query($sql); 
 
         while($row = $hasil->fetch_assoc()){
@@ -112,36 +112,47 @@ include "koneksi.php";
     </div>
     </section>
     <section id="gallery" class="text-center p-5 bg-danger-subtle">
-      <div class="container">
+    <div class="container">
         <h1 class="fw-bold display-4 pb-3">Gallery</h1>
+        
         <div id="carouselExample" class="carousel slide">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="image/Simpang 5_2_11zon.jpg" class="d-block w-100" alt="Simpang 5">
+            <div class="carousel-inner">
+                <?php
+                // 1. Buat Query untuk mengambil data gallery (terbaru paling depan)
+                $sql = "SELECT * FROM gallery ORDER BY id DESC";
+                $hasil = mysqli_query($conn, $sql);
+
+                // 2. Variabel bantu untuk menentukan item aktif pertama
+                $active_first = true;
+
+                while ($row = mysqli_fetch_assoc($hasil)) {
+                    // Cek apakah ada gambar dan filenya tersedia
+                    if ($row["gambar"] != '' && file_exists('image/' . $row["gambar"])) {
+                ?>
+                        <div class="carousel-item <?= ($active_first) ? 'active' : '' ?>">
+                            <img src="image/<?= $row["gambar"] ?>" class="d-block w-100" alt="<?= $row["judul"] ?>">
+                        </div>
+                <?php
+                        // Setelah item pertama selesai, ubah variabel menjadi false
+                        // agar item berikutnya tidak mendapatkan class 'active'
+                        $active_first = false;
+                    }
+                }
+                ?>
             </div>
-            <div class="carousel-item">
-              <img src="image/Lawang 2_8_11zon.jpg" class="d-block w-100" alt="Lawang Sewu">
-            </div>
-            <div class="carousel-item">
-              <img src="image/Merbabu_7_11zon.jpg" class="d-block w-100" alt="Merbabu">
-            </div>
-            <div class="carousel-item">
-              <img src="image/Spiegel_3_11zon.jpg" class="d-block w-100" alt="Spiegel">
-            </div>
-            <div class="carousel-item">
-              <img src="image/Ungaran_1_11zon.jpg" class="d-block w-100" alt="Pasar Ungaran">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidd  en="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-      </div>
+
+    </div>
+</section>
   <!-- Schedule -->
 <section id="schedule" class="pt-5 mt-5">
   <header class="bg-pink text-center py-4">

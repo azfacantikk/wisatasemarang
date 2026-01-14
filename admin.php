@@ -1,7 +1,6 @@
 <?php
-session_start(); //memulai session
+session_start();
 
-//menyertakan code dari file koneksi
 include "koneksi.php";
 
 //check jika tidak ada user yang login arahkan ke halaman login
@@ -15,7 +14,7 @@ if (!isset($_SESSION['username'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wisata Semarang | Admin</title>
-    <link rel="icon" href="image/logo wisata_9_11zon.jpg" />
+    <link rel="icon" href="image/image/logo wisata_9_11zon.jpg" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link 
       rel="stylesheet" 
@@ -39,7 +38,7 @@ if (!isset($_SESSION['username'])) {
   <body>
     <nav class="navbar navbar-expand-sm bg-body-tertiary sticky-top bg-danger-subtle">
         <div class="container">
-            <a class="navbar-brand" target="_blank" href=".">My Daily Journal</a>
+            <a class="navbar-brand" target="_blank" href=".">Wisata Semarang</a>
             <button
             class="navbar-toggler"
             type="button"
@@ -59,14 +58,19 @@ if (!isset($_SESSION['username'])) {
                     <li class="nav-item">
                         <a class="nav-link" href="admin.php?page=article">Article</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.php?page=gallery">Gallery</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                         <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= $_SESSION['username']?>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="admin.php?page=profile">Profile</a></li>                             
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="logout.php">Logout</a></li> 
                         </ul>
-                    </li> 
+                    </li>
                 </ul>
             </div>
         </div>
@@ -80,8 +84,14 @@ if (!isset($_SESSION['username'])) {
                 $page = "dashboard";
             }
 
-            echo '<h4 class="lead display-6 pb-2 border-bottom border-danger-subtle">' . $page . '</h4>';
-            include($page . ".php");
+            // Mencegah error jika file tidak ditemukan
+            if (file_exists($page . ".php")) {
+                echo '<h4 class="lead display-6 pb-2 border-bottom border-danger-subtle">' . ucfirst($page) . '</h4>';
+                include($page . ".php");
+            } else {
+                echo '<h4 class="lead display-6 pb-2 border-bottom border-danger-subtle">Halaman Tidak Ditemukan</h4>';
+                echo '<p class="text-danger">File ' . $page . '.php belum dibuat.</p>';
+            }
             ?>
         </div> 
     </section>
@@ -110,6 +120,5 @@ if (!isset($_SESSION['username'])) {
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
       crossorigin="anonymous">
     </script>  
-    
   </body>
 </html>
