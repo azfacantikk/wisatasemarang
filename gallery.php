@@ -23,7 +23,7 @@
                         <th>No</th>
                         <th class="w-50">Judul</th>
                         <th class="w-50">Gambar</th>
-                        <th class="w-5">Aksi</th>
+                        <th class="w-50">Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="result">
