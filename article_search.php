@@ -29,7 +29,7 @@ while ($row = $hasil->fetch_assoc()) {
             <?php
             if ($row["gambar"] != '') {
                 if (file_exists('image/' . $row["gambar"] . '')) {
-                    echo '<img src="image/' . $row["gambar"] . '" class="img-fluid" alt="Gambar Artikel">';
+                    echo '<img src="image/' . $row["gambar"] . '" class="img-fluid" style="max-width: 250px;" alt="Gambar Article">';
                 }
             }
             ?>
